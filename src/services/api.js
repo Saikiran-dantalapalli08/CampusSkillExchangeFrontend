@@ -1,7 +1,17 @@
 import axios from 'axios';
 
+const configuredApiUrl = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL;
+const apiUrl = configuredApiUrl
+  || (import.meta.env.DEV
+    ? 'http://localhost:8081'
+    : 'https://campus-skill-exchange-backend-xzav.onrender.com');
+const normalizedApiUrl = apiUrl.replace(/\/+$/, '');
+const apiBaseUrl = normalizedApiUrl.endsWith('/api')
+  ? normalizedApiUrl
+  : `${normalizedApiUrl}/api`;
+
 const api = axios.create({
-  baseURL: 'http://localhost:8081/api',
+  baseURL: apiBaseUrl,
   headers: {
     'Content-Type': 'application/json'
   }

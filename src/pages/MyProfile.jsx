@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
 function MyProfile() {
@@ -36,7 +36,7 @@ function MyProfile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`http://localhost:8081/api/users/${user.id}`, form);
+      const response = await api.put(`/users/${user.id}`, form);
       setUser(response.data);
       alert('Profile updated successfully');
     } catch (error) {

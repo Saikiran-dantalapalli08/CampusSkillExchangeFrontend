@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
 function Requests() {
@@ -14,8 +14,8 @@ function Requests() {
 
     try {
       const [receivedRes, sentRes] = await Promise.all([
-        axios.get(`http://localhost:8081/api/requests/received/${user.id}`),
-        axios.get(`http://localhost:8081/api/requests/sent/${user.id}`)
+        api.get(`/requests/received/${user.id}`),
+        api.get(`/requests/sent/${user.id}`)
       ]);
 
       setReceived(receivedRes.data);
@@ -37,7 +37,7 @@ function Requests() {
 
   const handleDecision = async (requestId, decision) => {
     try {
-      await axios.put(`http://localhost:8081/api/requests/${requestId}/${decision}`);
+      await api.put(`/requests/${requestId}/${decision}`);
       await loadRequests();
     } catch (error) {
       alert('Unable to update request status right now.');

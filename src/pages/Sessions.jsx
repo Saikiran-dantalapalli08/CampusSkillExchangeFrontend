@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
 function Sessions() {
@@ -14,7 +14,7 @@ function Sessions() {
       return;
     }
 
-    axios.get(`http://localhost:8081/api/sessions/${user.id}`)
+    api.get(`/sessions/${user.id}`)
       .then((res) => setSessions(res.data))
       .catch(() => setSessions([]));
   }, [user, navigate]);

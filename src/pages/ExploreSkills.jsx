@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 
 function ExploreSkills() {
   const [skills, setSkills] = useState([]);
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:8081/api/skills')
+    api.get('/skills')
       .then((res) => setSkills(res.data))
       .catch(() => setSkills([]));
   }, []);

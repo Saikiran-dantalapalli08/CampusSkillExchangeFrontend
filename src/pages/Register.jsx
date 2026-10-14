@@ -57,10 +57,14 @@ function Register() {
         learnSkillIds: form.learnSkillIds
       };
 
-      await axios.post('http://localhost:8081/api/auth/register', payload);
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/auth/register`,
+        payload
+      );
       navigate('/login');
     } catch (err) {
-      setError(err.response?.data?.message || 'Something went wrong. Please try again.');
+      setError(err.response?.data?.message
+        || 'Unable to reach the server. Check that the backend is running and the API URL is configured.');
     }
   };
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
 function Profile() {
@@ -14,7 +14,7 @@ function Profile() {
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    axios.get(`http://localhost:8081/api/users/${id}`)
+    api.get(`/users/${id}`)
       .then((res) => setUser(res.data))
       .catch(() => setUser(null));
   }, [id]);
@@ -46,7 +46,7 @@ function Profile() {
     setSubmitting(true);
 
     try {
-      await axios.post('http://localhost:8081/api/requests', {
+      await api.post('/requests', {
         senderId: loggedInUser.id,
         receiverId: Number(id),
         skillId: Number(selectedSkillId),

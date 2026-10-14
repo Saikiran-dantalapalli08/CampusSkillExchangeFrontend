@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
 function Matches() {
@@ -14,7 +14,7 @@ function Matches() {
       return;
     }
 
-    axios.get(`http://localhost:8081/api/matches/${user.id}`)
+    api.get(`/matches/${user.id}`)
       .then((res) => setMatches(res.data))
       .catch(() => setMatches([]));
   }, [user, navigate]);

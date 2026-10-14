@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
 function Login() {
@@ -18,7 +18,7 @@ function Login() {
     setError('');
 
     try {
-      const response = await axios.post('http://localhost:8081/api/auth/login', form);
+      const response = await api.post('/auth/login', form);
       const loggedUser = response.data.user;
       const authData = {
         email: form.email,
@@ -26,12 +26,12 @@ function Login() {
       };
 
       localStorage.setItem('campusAuth', JSON.stringify(authData));
-      axios.defaults.headers.common.Authorization = 'Basic ' + window.btoa(`${authData.email}:${authData.password}`);
-
       setUser(loggedUser);
       navigate(loggedUser.role === 'ROLE_ADMIN' ? '/admin' : '/dashboard');
     } catch (err) {
-      setError('Invalid email or password');
+      setError(err.response
+        ? 'Invalid email or password'
+        : 'Unable to reach the server. Check that the backend is running and the API URL is configured.');
     }
   };
 

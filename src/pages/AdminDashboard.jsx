@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
 function AdminDashboard() {
@@ -15,11 +15,11 @@ function AdminDashboard() {
       return;
     }
 
-    axios.get('http://localhost:8081/api/admin/stats')
+    api.get('/admin/stats')
       .then((res) => setStats(res.data))
       .catch(() => setStats({}));
 
-    axios.get('http://localhost:8081/api/admin/users')
+    api.get('/admin/users')
       .then((res) => setUsers(res.data))
       .catch(() => setUsers([]));
   }, [user, navigate]);
